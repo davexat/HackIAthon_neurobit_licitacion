@@ -1,0 +1,18 @@
+PyMuPDF
+pdfplumber
+pytesseract
+opencv-python
+Pillow
+pandas
+numpy
+tqdm
+python-dotenv
+spacy
+nltk
+scikit-learn
+regex
+joblib
+matplotlib
+seaborn
+pytest
+-e .
