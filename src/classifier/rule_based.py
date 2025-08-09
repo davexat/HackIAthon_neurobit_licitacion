@@ -5,9 +5,9 @@ from typing import List, Dict
 def test():
     """Prueba de humo: ejecuta la clasificación sobre un texto de ejemplo y muestra resultados."""
     ejemplo = "El contratista deberá cumplir con todas las normas de seguridad.\
-     El plazo será de 90 días a partir de la firma del contrato. El presupuesto estimado es de $500,000.\
-     Se solicita presentar póliza de seguro de buena ejecución. La primera entrega parcial será en 30 días hábiles.\
-     Contacto: soporte@empresa.com o visite https://www.empresa.com/terminos."
+    El plazo será de 90 días a partir de la firma del contrato. El presupuesto estimado es de $500,000.\
+    Se solicita presentar póliza de seguro de buena ejecución. La primera entrega parcial será en 30 días hábiles.\
+    Contacto: soporte@empresa.com o visite https://www.empresa.com/terminos."
 
     resultados = classify_paragraph(ejemplo)
     print("=== Resultados de clasificación ===")
