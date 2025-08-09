@@ -15,4 +15,7 @@ joblib
 matplotlib
 seaborn
 pytest
+requests
+easyocr
+cv2
 -e .
