@@ -100,6 +100,32 @@ def obtener_informacion_compania(ruc):
     except Exception as e:
         print(f"Error: {e}")
 
+def extract_from_textarea(html, textarea_id):
+    """
+    Busca una etiqueta textarea por su id y extrae el texto que contiene.
+    """
+    # Construimos el identificador único del textarea
+    search_str = f'id="{textarea_id}"'
+    
+    # Encontramos la posición del id
+    pos_id = html.find(search_str)
+    if pos_id == -1:
+        return "" # No se encontró el textarea
+
+    # A partir de la posición del id, encontramos el cierre de la etiqueta de apertura '>'
+    pos_value_start = html.find('>', pos_id)
+    if pos_value_start == -1:
+        return ""
+
+    # Buscamos la etiqueta de cierre '</textarea>' que le corresponde
+    pos_value_end = html.find('</textarea>', pos_value_start)
+    if pos_value_end == -1:
+        return ""
+
+    # Extraemos el valor, lo limpiamos y lo retornamos
+    value = html[pos_value_start + 1 : pos_value_end]
+    return value.strip()
+
 # Función para procesar la información de la compañía
 
 def procesar_informacion(html):
@@ -297,7 +323,95 @@ def procesar_informacion(html):
             posvalue = html.find("value=", posInicio)
             posvalueFin = html.find("\"", posvalue + 7)
             dtEmpres["SitioWeb"] = html[posvalue + 7:posvalueFin]
+
+    # Extraer el "Objeto social"
+    posInicio = html.find("Objeto social:")
+    if posInicio > -1:
+        posvalueInicio = html.find('value="', posInicio)
+        if posvalueInicio > -1:
+            posvalueFin = html.find('"', posvalueInicio + 7)
+            objeto_social = html[posvalueInicio + 7:posvalueFin].strip()
+            dtEmpres["ObjetoSocial"] = objeto_social
+
+    # --- INICIO DEL CÓDIGO MODIFICADO PARA CIIU ---
+
+    dtEmpres["ActividadesCIIU"] = []
+    actividades = []
     
+    # Usaremos una variable para saber dónde continuar la búsqueda en el HTML
+    posicion_actual = 0
+
+    # 1. Extraer la Actividad Principal
+    # Buscamos la etiqueta de texto que es nuestra "ancla"
+    label_principal = "CIIU actividad principal:"
+    pos_label_p = html.find(label_principal, posicion_actual)
+    
+    if pos_label_p > -1:
+        # A partir de la etiqueta, encontramos el textarea del CÓDIGO
+        pos_textarea_open_p = html.find('<textarea', pos_label_p)
+        pos_value_start_p = html.find('>', pos_textarea_open_p)
+        pos_value_end_p = html.find('</textarea>', pos_value_start_p)
+        ciiu_codigo = html[pos_value_start_p + 1 : pos_value_end_p].strip()
+        
+        # Ahora, buscamos la etiqueta "Descripción:" DESPUÉS de haber encontrado el código
+        label_descripcion = "Descripción:"
+        pos_label_desc = html.find(label_descripcion, pos_value_end_p)
+        
+        # Y encontramos el textarea de la DESCRIPCIÓN
+        pos_textarea_open_d = html.find('<textarea', pos_label_desc)
+        pos_value_start_d = html.find('>', pos_textarea_open_d)
+        pos_value_end_d = html.find('</textarea>', pos_value_start_d)
+        ciiu_descripcion = html[pos_value_start_d + 1 : pos_value_end_d].strip()
+
+        # Si encontramos un código, lo añadimos a la lista
+        if ciiu_codigo:
+            actividades.append({
+                "Tipo": "Principal",
+                "CIIU": ciiu_codigo,
+                "Descripcion": ciiu_descripcion
+            })
+        
+        # Actualizamos nuestra posición para la siguiente búsqueda
+        posicion_actual = pos_value_end_d
+
+    # 2. Extraer las Actividades Complementarias
+    for i in range(1, 6):
+        label_complementaria = f"CIIU actividad complementaria {i}:"
+        pos_label_c = html.find(label_complementaria, posicion_actual)
+        
+        if pos_label_c > -1:
+            # Encontramos el textarea del CÓDIGO complementario
+            pos_textarea_open_c = html.find('<textarea', pos_label_c)
+            pos_value_start_c = html.find('>', pos_textarea_open_c)
+            pos_value_end_c = html.find('</textarea>', pos_value_start_c)
+            ciiu_codigo_comp = html[pos_value_start_c + 1 : pos_value_end_c].strip()
+            
+            # Buscamos la "Descripción:" DESPUÉS del código complementario
+            pos_label_desc_c = html.find(label_descripcion, pos_value_end_c)
+            
+            # Y el textarea de la DESCRIPCIÓN complementaria
+            pos_textarea_open_d_c = html.find('<textarea', pos_label_desc_c)
+            pos_value_start_d_c = html.find('>', pos_textarea_open_d_c)
+            pos_value_end_d_c = html.find('</textarea>', pos_value_start_d_c)
+            ciiu_descripcion_comp = html[pos_value_start_d_c + 1 : pos_value_end_d_c].strip()
+
+            # Si el código no está vacío, lo añadimos
+            if ciiu_codigo_comp:
+                actividades.append({
+                    "Tipo": f"Complementaria {i}",
+                    "CIIU": ciiu_codigo_comp,
+                    "Descripcion": ciiu_descripcion_comp
+                })
+            
+            # Actualizamos la posición para buscar la siguiente actividad complementaria
+            posicion_actual = pos_value_end_d_c
+        else:
+            # Si no encontramos "actividad complementaria 1", salimos del bucle
+            # para no seguir buscando la 2, 3, etc.
+            break
+            
+    dtEmpres["ActividadesCIIU"] = actividades
+
     # Buscar el valor de "Capital suscrito" en el HTML
     posInicio = html.find("Capital suscrito:")
     if posInicio > -1:
@@ -314,5 +428,5 @@ def procesar_informacion(html):
 
 # --- Ejecución ---
 if __name__ == "__main__":
-    ruc_a_consultar = "0993382989001"  # El RUC que deseas consultar
+    ruc_a_consultar = "0990004196001"  # El RUC que deseas consultar
     obtener_informacion_compania(ruc_a_consultar)
