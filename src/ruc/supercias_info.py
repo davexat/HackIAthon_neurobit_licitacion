@@ -324,15 +324,6 @@ def procesar_informacion(html):
             posvalueFin = html.find("\"", posvalue + 7)
             dtEmpres["SitioWeb"] = html[posvalue + 7:posvalueFin]
 
-    # Extraer el "Objeto social"
-    posInicio = html.find("Objeto social:")
-    if posInicio > -1:
-        posvalueInicio = html.find('value="', posInicio)
-        if posvalueInicio > -1:
-            posvalueFin = html.find('"', posvalueInicio + 7)
-            objeto_social = html[posvalueInicio + 7:posvalueFin].strip()
-            dtEmpres["ObjetoSocial"] = objeto_social
-
     # --- INICIO DEL CÓDIGO MODIFICADO PARA CIIU ---
 
     dtEmpres["ActividadesCIIU"] = []
