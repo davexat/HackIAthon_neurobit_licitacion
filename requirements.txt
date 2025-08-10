@@ -17,5 +17,6 @@ seaborn
 pytest
 requests
 easyocr
-cv2
+opencv-python
+beautifulsoup4
 -e .
