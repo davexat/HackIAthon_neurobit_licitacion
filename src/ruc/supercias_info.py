@@ -95,10 +95,11 @@ def obtener_informacion_compania(ruc):
                     print("*" * 10)
                     _req = sesion.get("https://appscvsgen.supercias.gob.ec/consultaCompanias/societario/informacionCompanias.jsf", headers=headers, allow_redirects=True)
                     rptaJson = procesar_informacion(_req.text)
-                    print(rptaJson)
+                    return rptaJson
 
     except Exception as e:
         print(f"Error: {e}")
+        return {}
 
 def extract_from_textarea(html, textarea_id):
     """

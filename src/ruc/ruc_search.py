@@ -1,5 +1,6 @@
-from sri_info import consultar_ruc_sri
-from supercias_info import obtener_informacion_compania
+# Usamos importaciones relativas porque estos archivos están en el mismo directorio 'ruc'
+from .sri_info import consultar_ruc_sri
+from .supercias_info import obtener_informacion_compania
 
 def reemplazar_none_con_vacio(obj):
     """

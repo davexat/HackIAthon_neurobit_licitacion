@@ -17,6 +17,7 @@ seaborn
 pytest
 requests
 easyocr
-opencv-python
 beautifulsoup4
+fastapi
+uvicorn[standard]
 -e .
