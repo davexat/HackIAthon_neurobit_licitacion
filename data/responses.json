@@ -1,0 +1,985 @@
+[
+    {
+        "document_id": "0",
+        "language": "es",
+        "segments": [
+            {
+                "id": 1,
+                "labels": [
+                    "Alcance del Trabajo"
+                ],
+                "span": [
+                    0,
+                    359
+                ],
+                "excerpt": "CONTRATO DE OBRA PÚBLICA Entre la PREFECTURA DE…",
+                "entities": [],
+                "confidence": 0.95
+            },
+            {
+                "id": 2,
+                "labels": [
+                    "Condiciones EconÃ³micas"
+                ],
+                "span": [
+                    360,
+                    498
+                ],
+                "excerpt": "SEGUNDA – MONTO DEL CONTRATO El valor total d…",
+                "entities": [
+                    {
+                        "type": "AMOUNT",
+                        "original": "USD 20,000,000.00",
+                        "currency": "USD",
+                        "value": 20000000.0,
+                        "span": [
+                            403,
+                            419
+                        ],
+                        "confidence": 0.99
+                    }
+                ],
+                "confidence": 0.95
+            },
+            {
+                "id": 3,
+                "labels": [
+                    "Plazos"
+                ],
+                "span": [
+                    499,
+                    594
+                ],
+                "excerpt": "TERCERA – PLAZO DE EJECUCIÓN La obra se ejecu…",
+                "entities": [],
+                "confidence": 0.95
+            },
+            {
+                "id": 4,
+                "labels": [
+                    "GarantÃ­as"
+                ],
+                "span": [
+                    595,
+                    840
+                ],
+                "excerpt": "CUARTA – GARANTÍAS EDIFIKA S.A. deberá pres…",
+                "entities": [],
+                "confidence": 0.95
+            },
+            {
+                "id": 5,
+                "labels": [
+                    "Condiciones EconÃ³micas"
+                ],
+                "span": [
+                    841,
+                    987
+                ],
+                "excerpt": "QUINTA – ANTICIPO La contratante entregará un…",
+                "entities": [
+                    {
+                        "type": "AMOUNT",
+                        "original": "USD 6,000,000.00",
+                        "currency": "USD",
+                        "value": 6000000.0,
+                        "span": [
+                            926,
+                            942
+                        ],
+                        "confidence": 0.99
+                    }
+                ],
+                "confidence": 0.95
+            }
+        ],
+        "entities": [
+            {
+                "type": "AMOUNT",
+                "original": "USD 20,000,000.00",
+                "currency": "USD",
+                "value": 20000000.0,
+                "span": [
+                    136,
+                    152
+                ],
+                "confidence": 0.99
+            },
+            {
+                "type": "RUC",
+                "text": "0992881364001",
+                "span": [
+                    421,
+                    434
+                ],
+                "confidence": 0.99
+            }
+        ],
+        "warnings": [],
+        "meta": {
+            "model": "v1",
+            "processing_date": "2024-02-22",
+            "chunk_index": 1,
+            "total_chunks": 4
+        }
+    },
+    {
+        "document_id": "0",
+        "language": "es",
+        "segments": [
+            {
+                "id": 1,
+                "labels": [
+                    "Penalidades"
+                ],
+                "span": [
+                    0,
+                    158
+                ],
+                "excerpt": "SEXTA – MULTAS Y PENALIZACIONES • Multa por reâ€¦",
+                "entities": [
+                    {
+                        "type": "AMOUNT",
+                        "original": "0.1%",
+                        "currency": null,
+                        "value": 0.001,
+                        "span": [
+                            33,
+                            37
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "original": "10%",
+                        "currency": null,
+                        "value": 0.1,
+                        "span": [
+                            93,
+                            96
+                        ],
+                        "confidence": 0.95
+                    }
+                ],
+                "confidence": 0.95
+            },
+            {
+                "id": 2,
+                "labels": [
+                    "Plazos"
+                ],
+                "span": [
+                    159,
+                    255
+                ],
+                "excerpt": "SÉPTIMA – RECEPCIÓN DE LA OBRA • Recepción prâ€¦",
+                "entities": [],
+                "confidence": 0.95
+            },
+            {
+                "id": 3,
+                "labels": [
+                    "Condiciones Legales"
+                ],
+                "span": [
+                    256,
+                    451
+                ],
+                "excerpt": "OCTAVA – RESOLUCIÓN DE CONTROVERSIAS • Conciliâ€¦",
+                "entities": [],
+                "confidence": 0.95
+            },
+            {
+                "id": 4,
+                "labels": [
+                    "Condiciones Legales"
+                ],
+                "span": [
+                    452,
+                    576
+                ],
+                "excerpt": "NOVENA – LEGISLACIÓN APLICABLE LOSNCP, su reglâ€¦",
+                "entities": [],
+                "confidence": 0.95
+            },
+            {
+                "id": 5,
+                "labels": [
+                    "Otros"
+                ],
+                "span": [
+                    577,
+                    875
+                ],
+                "excerpt": "ANEXOS ANEXO I – Cronograma de Ejecución Mesâ€¦",
+                "entities": [],
+                "confidence": 0.8
+            }
+        ],
+        "entities": [],
+        "warnings": [],
+        "meta": {
+            "model": "v1",
+            "processing_date": "2024-02-12",
+            "chunk_index": 2,
+            "total_chunks": 4
+        }
+    },
+    {
+        "document_id": "0",
+        "language": "es",
+        "segments": [
+            {
+                "id": 1,
+                "labels": [
+                    "Condiciones EconÃ³micas"
+                ],
+                "span": [
+                    0,
+                    225
+                ],
+                "excerpt": "ANEXO II – Presupuesto Detallado Partida Moâ€¦",
+                "entities": [
+                    {
+                        "type": "AMOUNT",
+                        "original": "500,000.00",
+                        "currency": "USD",
+                        "value": 500000.0,
+                        "span": [
+                            67,
+                            77
+                        ],
+                        "confidence": 0.99
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "original": "2,000,000.00",
+                        "currency": "USD",
+                        "value": 2000000.0,
+                        "span": [
+                            103,
+                            115
+                        ],
+                        "confidence": 0.99
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "original": "2,500,000.00",
+                        "currency": "USD",
+                        "value": 2500000.0,
+                        "span": [
+                            133,
+                            145
+                        ],
+                        "confidence": 0.99
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "original": "3,000,000.00",
+                        "currency": "USD",
+                        "value": 3000000.0,
+                        "span": [
+                            160,
+                            172
+                        ],
+                        "confidence": 0.99
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "original": "5,000,000.00",
+                        "currency": "USD",
+                        "value": 5000000.0,
+                        "span": [
+                            186,
+                            198
+                        ],
+                        "confidence": 0.99
+                    }
+                ],
+                "confidence": 0.95
+            },
+            {
+                "id": 2,
+                "labels": [
+                    "Condiciones EconÃ³micas"
+                ],
+                "span": [
+                    225,
+                    429
+                ],
+                "excerpt": "Partida Monto (USD) Señalización 1,000,000.00â€¦",
+                "entities": [
+                    {
+                        "type": "AMOUNT",
+                        "original": "1,000,000.00",
+                        "currency": "USD",
+                        "value": 1000000.0,
+                        "span": [
+                            272,
+                            284
+                        ],
+                        "confidence": 0.99
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "original": "1,000,000.00",
+                        "currency": "USD",
+                        "value": 1000000.0,
+                        "span": [
+                            300,
+                            312
+                        ],
+                        "confidence": 0.99
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "original": "1,000,000.00",
+                        "currency": "USD",
+                        "value": 1000000.0,
+                        "span": [
+                            323,
+                            335
+                        ],
+                        "confidence": 0.99
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "original": "3,000,000.00",
+                        "currency": "USD",
+                        "value": 3000000.0,
+                        "span": [
+                            349,
+                            361
+                        ],
+                        "confidence": 0.99
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "original": "20,000,000.00",
+                        "currency": "USD",
+                        "value": 20000000.0,
+                        "span": [
+                            370,
+                            383
+                        ],
+                        "confidence": 0.99
+                    }
+                ],
+                "confidence": 0.95
+            },
+            {
+                "id": 3,
+                "labels": [
+                    "GarantÃ­as"
+                ],
+                "span": [
+                    429,
+                    664
+                ],
+                "excerpt": "ANEXO III – Garantías Tipo Monto (USD) Vigenciâ€¦",
+                "entities": [
+                    {
+                        "type": "AMOUNT",
+                        "original": "1,000,000.00",
+                        "currency": "USD",
+                        "value": 1000000.0,
+                        "span": [
+                            494,
+                            506
+                        ],
+                        "confidence": 0.99
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "original": "6,000,000.00",
+                        "currency": "USD",
+                        "value": 6000000.0,
+                        "span": [
+                            566,
+                            578
+                        ],
+                        "confidence": 0.99
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "original": "1,000,000.00",
+                        "currency": "USD",
+                        "value": 1000000.0,
+                        "span": [
+                            633,
+                            645
+                        ],
+                        "confidence": 0.99
+                    }
+                ],
+                "confidence": 0.95
+            },
+            {
+                "id": 4,
+                "labels": [
+                    "Requisitos TÃ©cnicos"
+                ],
+                "span": [
+                    664,
+                    840
+                ],
+                "excerpt": "ANEXO IV – Especificaciones Técnicas • Mezclâ€¦",
+                "entities": [],
+                "confidence": 0.95
+            },
+            {
+                "id": 5,
+                "labels": [
+                    "Otros"
+                ],
+                "span": [
+                    840,
+                    951
+                ],
+                "excerpt": "ANEXO V – Acta de Inicio (Modelo) Incluye fechâ€¦",
+                "entities": [],
+                "confidence": 0.75
+            }
+        ],
+        "entities": [
+            {
+                "type": "AMOUNT",
+                "original": "500,000.00",
+                "currency": "USD",
+                "value": 500000.0,
+                "span": [
+                    67,
+                    77
+                ],
+                "confidence": 0.99
+            },
+            {
+                "type": "AMOUNT",
+                "original": "2,000,000.00",
+                "currency": "USD",
+                "value": 2000000.0,
+                "span": [
+                    103,
+                    115
+                ],
+                "confidence": 0.99
+            },
+            {
+                "type": "AMOUNT",
+                "original": "2,500,000.00",
+                "currency": "USD",
+                "value": 2500000.0,
+                "span": [
+                    133,
+                    145
+                ],
+                "confidence": 0.99
+            },
+            {
+                "type": "AMOUNT",
+                "original": "3,000,000.00",
+                "currency": "USD",
+                "value": 3000000.0,
+                "span": [
+                    160,
+                    172
+                ],
+                "confidence": 0.99
+            },
+            {
+                "type": "AMOUNT",
+                "original": "5,000,000.00",
+                "currency": "USD",
+                "value": 5000000.0,
+                "span": [
+                    186,
+                    198
+                ],
+                "confidence": 0.99
+            },
+            {
+                "type": "AMOUNT",
+                "original": "1,000,000.00",
+                "currency": "USD",
+                "value": 1000000.0,
+                "span": [
+                    272,
+                    284
+                ],
+                "confidence": 0.99
+            },
+            {
+                "type": "AMOUNT",
+                "original": "1,000,000.00",
+                "currency": "USD",
+                "value": 1000000.0,
+                "span": [
+                    300,
+                    312
+                ],
+                "confidence": 0.99
+            },
+            {
+                "type": "AMOUNT",
+                "original": "1,000,000.00",
+                "currency": "USD",
+                "value": 1000000.0,
+                "span": [
+                    323,
+                    335
+                ],
+                "confidence": 0.99
+            },
+            {
+                "type": "AMOUNT",
+                "original": "3,000,000.00",
+                "currency": "USD",
+                "value": 3000000.0,
+                "span": [
+                    349,
+                    361
+                ],
+                "confidence": 0.99
+            },
+            {
+                "type": "AMOUNT",
+                "original": "20,000,000.00",
+                "currency": "USD",
+                "value": 20000000.0,
+                "span": [
+                    370,
+                    383
+                ],
+                "confidence": 0.99
+            },
+            {
+                "type": "AMOUNT",
+                "original": "1,000,000.00",
+                "currency": "USD",
+                "value": 1000000.0,
+                "span": [
+                    494,
+                    506
+                ],
+                "confidence": 0.99
+            },
+            {
+                "type": "AMOUNT",
+                "original": "6,000,000.00",
+                "currency": "USD",
+                "value": 6000000.0,
+                "span": [
+                    566,
+                    578
+                ],
+                "confidence": 0.99
+            },
+            {
+                "type": "AMOUNT",
+                "original": "1,000,000.00",
+                "currency": "USD",
+                "value": 1000000.0,
+                "span": [
+                    633,
+                    645
+                ],
+                "confidence": 0.99
+            }
+        ],
+        "warnings": [],
+        "meta": {
+            "model": "v1",
+            "processing_date": "2024-02-22",
+            "chunk_index": 3,
+            "total_chunks": 4
+        }
+    },
+    {
+        "document_id": "0",
+        "language": "es",
+        "segments": [
+            {
+                "id": 1,
+                "labels": [
+                    "DocumentaciÃ³n Requerida"
+                ],
+                "span": [
+                    0,
+                    195
+                ],
+                "excerpt": "FORMULARIOS Formulario de Oferta TÃ©cnica â€¦etallado Formulario de Oferta EconÃ³mica",
+                "entities": [
+                    {
+                        "type": "AMOUNT",
+                        "text": "USD 8M",
+                        "span": [
+                            56,
+                            62
+                        ],
+                        "confidence": 0.95
+                    }
+                ],
+                "confidence": 0.95
+            },
+            {
+                "id": 2,
+                "labels": [
+                    "Condiciones EconÃ³micas"
+                ],
+                "span": [
+                    195,
+                    315
+                ],
+                "excerpt": "• Monto ofertado: USD 20,000,000.00 • Anticiâ€¦Validez: 90 dÃ­as • GarantÃ­a de mante",
+                "entities": [
+                    {
+                        "type": "AMOUNT",
+                        "text": "USD 20,000,000.00",
+                        "span": [
+                            213,
+                            228
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "30%",
+                        "span": [
+                            237,
+                            240
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "NUMBER",
+                        "text": "90",
+                        "span": [
+                            276,
+                            278
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "2%",
+                        "span": [
+                            309,
+                            311
+                        ],
+                        "confidence": 0.95
+                    }
+                ],
+                "confidence": 0.95
+            },
+            {
+                "id": 3,
+                "labels": [
+                    "Condiciones Legales"
+                ],
+                "span": [
+                    315,
+                    451
+                ],
+                "excerpt": "ACTA DE ADJUDICACIÃ“N ACTA N.º 001-2025-PG Fecâ€¦ayas y EDIFIKA S.A. PRESUPUESTO MENSUAL",
+                "entities": [
+                    {
+                        "type": "AMOUNT",
+                        "text": "USD 20,000,000.00",
+                        "span": [
+                            387,
+                            402
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "NUMBER",
+                        "text": "12",
+                        "span": [
+                            410,
+                            412
+                        ],
+                        "confidence": 0.95
+                    }
+                ],
+                "confidence": 0.95
+            },
+            {
+                "id": 4,
+                "labels": [
+                    "Condiciones EconÃ³micas"
+                ],
+                "span": [
+                    451,
+                    745
+                ],
+                "excerpt": "Mes Fase Monto (USD) 1 Estudios 500,000.002â€“3 â€¦0011 SupervisiÃ³n 1,000,000.0012 RecepciÃ³n",
+                "entities": [
+                    {
+                        "type": "AMOUNT",
+                        "text": "500,000.00",
+                        "span": [
+                            492,
+                            502
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "2,000,000.00",
+                        "span": [
+                            520,
+                            530
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "2,500,000.00",
+                        "span": [
+                            544,
+                            554
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "3,000,000.00",
+                        "span": [
+                            568,
+                            578
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "5,000,000.00",
+                        "span": [
+                            592,
+                            602
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "1,000,000.00",
+                        "span": [
+                            620,
+                            630
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "1,000,000.00",
+                        "span": [
+                            644,
+                            654
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "1,000,000.00",
+                        "span": [
+                            668,
+                            678
+                        ],
+                        "confidence": 0.95
+                    }
+                ],
+                "confidence": 0.95
+            },
+            {
+                "id": 5,
+                "labels": [
+                    "Condiciones EconÃ³micas"
+                ],
+                "span": [
+                    745,
+                    1074
+                ],
+                "excerpt": "FLUJO DE CAJA PROYECTADO Mes Avance (USD) Amorâ€¦0.001,000,000.001,000,000.000.00 â€“500,000.00",
+                "entities": [
+                    {
+                        "type": "AMOUNT",
+                        "text": "500,000.00",
+                        "span": [
+                            807,
+                            817
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "6,000,000.00",
+                        "span": [
+                            824,
+                            834
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "500,000.00",
+                        "span": [
+                            834,
+                            844
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "5,500,000.00",
+                        "span": [
+                            847,
+                            857
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "5,500,000.00",
+                        "span": [
+                            858,
+                            868
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "750,000.00",
+                        "span": [
+                            916,
+                            926
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "250K",
+                        "span": [
+                            926,
+                            930
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "1.75M",
+                        "span": [
+                            933,
+                            938
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "–750,000.00",
+                        "span": [
+                            967,
+                            978
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "+250K",
+                        "span": [
+                            979,
+                            984
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "–500K",
+                        "span": [
+                            987,
+                            993
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "1,000,000.00",
+                        "span": [
+                            1004,
+                            1014
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "1,000,000.00",
+                        "span": [
+                            1020,
+                            1030
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "1,000,000.00",
+                        "span": [
+                            1030,
+                            1040
+                        ],
+                        "confidence": 0.95
+                    },
+                    {
+                        "type": "AMOUNT",
+                        "text": "–500,000.00",
+                        "span": [
+                            1063,
+                            1074
+                        ],
+                        "confidence": 0.95
+                    }
+                ],
+                "confidence": 0.95
+            }
+        ],
+        "entities": [
+            {
+                "type": "AMOUNT",
+                "original": "USD 8M",
+                "currency": "USD",
+                "value": 8000000.0,
+                "span": [
+                    56,
+                    62
+                ],
+                "confidence": 0.95
+            },
+            {
+                "type": "AMOUNT",
+                "original": "USD 20,000,000.00",
+                "currency": "USD",
+                "value": 20000000.0,
+                "span": [
+                    213,
+                    228
+                ],
+                "confidence": 0.95
+            },
+            {
+                "type": "AMOUNT",
+                "original": "USD 20,000,000.00",
+                "currency": "USD",
+                "value": 20000000.0,
+                "span": [
+                    387,
+                    402
+                ],
+                "confidence": 0.95
+            }
+        ],
+        "warnings": [],
+        "meta": {
+            "model": "v1",
+            "processing_date": "2024-01-18",
+            "chunk_index": 4,
+            "total_chunks": 4
+        }
+    }
+]

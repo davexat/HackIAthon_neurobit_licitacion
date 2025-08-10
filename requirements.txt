@@ -17,4 +17,6 @@ seaborn
 pytest
 notebook
 ipykernel
+python-dotenv
+google-generativeai
 -e .
