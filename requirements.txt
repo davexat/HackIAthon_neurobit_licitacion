@@ -1,7 +1,6 @@
 PyMuPDF
 pdfplumber
 pytesseract
-opencv-python
 Pillow
 pandas
 numpy
@@ -16,7 +15,6 @@ matplotlib
 seaborn
 pytest
 requests
-easyocr
 beautifulsoup4
 fastapi
 uvicorn[standard]
