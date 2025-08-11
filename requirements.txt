@@ -1,7 +1,6 @@
 PyMuPDF
 pdfplumber
 pytesseract
-opencv-python
 Pillow
 pandas
 numpy
@@ -15,8 +14,15 @@ joblib
 matplotlib
 seaborn
 pytest
+<<<<<<< HEAD
 notebook
 ipykernel
 python-dotenv
 google-generativeai
+=======
+requests
+beautifulsoup4
+fastapi
+uvicorn[standard]
+>>>>>>> cf0ce08d3df411aedceca73441752e3cc1ff9adf
 -e .
