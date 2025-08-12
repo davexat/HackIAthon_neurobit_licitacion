@@ -14,8 +14,13 @@ joblib
 matplotlib
 seaborn
 pytest
+notebook
+ipykernel
+python-dotenv
+google-generativeai
 requests
 beautifulsoup4
 fastapi
+easyocr
 uvicorn[standard]
 -e .
