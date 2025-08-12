@@ -7,12 +7,14 @@ import os
 import shutil
 from typing import Dict, Optional, Any, List
 import tempfile
+import json
+from pydantic import BaseModel
 
 # Importamos la función desde el módulo ruc.ruc_search
 # Python entiende esta ruta porque ejecutaremos el comando desde la raíz del proyecto.
 
 from ruc.ruc_search import unificar_info_empresa_produccion
-from utils.pdf_reconstruction import reconstruir_documento_desde_json
+from utils.pdf_analisis import analyze_contract_documents
 from utils.pdf_extractor import PDFTextExtractor, extract_text_from_pdf
 
 
@@ -34,6 +36,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+class ComparisonRequest(BaseModel):
+    pliego_json: Dict[str, Any]
+    oferta_text: str
 
 
 # --- Definición del Endpoint de la API ---
@@ -106,15 +112,38 @@ async def extract_pdf_data(
         print("INFO: Archivo temporal eliminado.")
 
 
-# ------ otro endpint
-@app.post("/api/v1/reconstruir_documento", tags=["PDF"])
-async def reconstruir_documento(segmentos: List[Dict[str, Any]] = Body(...)):
+# --- NUEVO ENDPOINT PARA COMPARAR DOCUMENTOS ---
+@app.post("/api/v1/compare-documents/", tags=["Análisis de Documentos"])
+async def compare_documents_endpoint(request: ComparisonRequest):
     """
-    Reconstruye un documento narrativo a partir de un JSON de segmentos clasificados.
+    Recibe el JSON de un pliego y el texto de una oferta para realizar un
+    análisis comparativo y devolver un informe en formato Markdown.
+
+    - **pliego_json**: El objeto JSON completo extraído del documento del pliego.
+    - **oferta_text**: El contenido de texto completo extraído del documento de la oferta.
     """
+    print("INFO: Recibida petición para comparar pliego y oferta.")
+    
+    if not request.pliego_json or not request.oferta_text:
+        print("ERROR: Faltan datos en la solicitud. 'pliego_json' y 'oferta_text' son requeridos.")
+        raise HTTPException(
+            status_code=400, 
+            detail="Datos insuficientes. Se requiere tanto 'pliego_json' como 'oferta_text'."
+        )
+
     try:
-        documento = reconstruir_documento_desde_json(segmentos)
-        return {"documento": documento}
+        # Llama a la función importada para realizar el análisis
+        report = analyze_contract_documents(
+            pliego_json_data=request.pliego_json,
+            oferta_text_content=request.oferta_text
+        )
+        
+        print("INFO: Análisis completado con éxito.")
+        return {"comparison_report": report}
+        
     except Exception as e:
-        print(f"ERROR: Fallo en reconstrucción: {e}")
-        raise HTTPException(status_code=500, detail=f"Error interno del servidor: {e}")
+        print(f"ERROR: Fallo durante el análisis comparativo: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Error interno del servidor durante la comparación: {e}"
+        )
