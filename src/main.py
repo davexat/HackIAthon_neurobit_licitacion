@@ -1,11 +1,20 @@
 # src/main.py
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Body,UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
+
+import os
+import shutil
+from typing import Dict, Optional, Any, List
+import tempfile
 
 # Importamos la función desde el módulo ruc.ruc_search
 # Python entiende esta ruta porque ejecutaremos el comando desde la raíz del proyecto.
+
 from ruc.ruc_search import unificar_info_empresa_produccion
+from utils.pdf_reconstruction import reconstruir_documento_desde_json
+from utils.pdf_extractor import PDFTextExtractor, extract_text_from_pdf
+
 
 # --- Inicialización de la aplicación FastAPI ---
 app = FastAPI(
@@ -95,3 +104,17 @@ async def extract_pdf_data(
         # Asegurarse de eliminar el archivo temporal
         os.unlink(temp_file_path)
         print("INFO: Archivo temporal eliminado.")
+
+
+# ------ otro endpint
+@app.post("/api/v1/reconstruir_documento", tags=["PDF"])
+async def reconstruir_documento(segmentos: List[Dict[str, Any]] = Body(...)):
+    """
+    Reconstruye un documento narrativo a partir de un JSON de segmentos clasificados.
+    """
+    try:
+        documento = reconstruir_documento_desde_json(segmentos)
+        return {"documento": documento}
+    except Exception as e:
+        print(f"ERROR: Fallo en reconstrucción: {e}")
+        raise HTTPException(status_code=500, detail=f"Error interno del servidor: {e}")
