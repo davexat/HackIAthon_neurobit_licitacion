@@ -13,9 +13,9 @@ from pydantic import BaseModel
 # Importamos la función desde el módulo ruc.ruc_search
 # Python entiende esta ruta porque ejecutaremos el comando desde la raíz del proyecto.
 
-from ruc.ruc_search import unificar_info_empresa_produccion
-from utils.pdf_analisis import analyze_contract_documents
-from utils.pdf_extractor import PDFTextExtractor, extract_text_from_pdf
+from src.ruc.ruc_search import unificar_info_empresa_produccion
+from src.utils.pdf_analisis import analyze_contract_documents
+from src.utils.pdf_extractor import PDFTextExtractor, extract_text_from_pdf
 
 
 # --- Inicialización de la aplicación FastAPI ---
