@@ -14,7 +14,231 @@ from typing import Optional, List, Dict
 from PIL import Image
 import fitz
 import pdfplumber
+import easyocr
 import pytesseract
+# --- EasyOCR extractor ---
+class PDFTextExtractorEasyOCR:
+    """
+    Extrae texto de PDFs usando EasyOCR, con soporte para:
+    - Documentos de licitación
+    - Extracción de tablas (pdfplumber)
+    - Filtrado y procesamiento avanzado
+    """
+    def __init__(self, languages=None, table_settings=None):
+        self.languages = languages or ['es', 'en']
+        self.reader = easyocr.Reader(self.languages, gpu=False)
+        self.table_settings = table_settings or {
+            "vertical_strategy": "lines",
+            "horizontal_strategy": "lines",
+            "intersection_y_tolerance": 15,
+            "intersection_x_tolerance": 15
+        }
+        self.licitacion_patterns = {
+            'section_header': r'^(SECCI[OÓ]N|CAP[IÍ]TULO)\s+[IVXLCDM]+\s*[-:]?\s*(.*)$',
+            'subsection': r'^\d+\.\d+\.?\s*(.*)$',
+            'item': r'^\d+\.\d+\.\d+\.?\s*(.*)$'
+        }
+
+    def extract_text(self, pdf_path: str, use_ocr: bool = True, extract_tables: bool = True) -> dict:
+        if not os.path.exists(pdf_path):
+            raise FileNotFoundError(f"El archivo {pdf_path} no existe")
+        result = {
+            'text': '',
+            'tables': [],
+            'metadata': self._extract_metadata(pdf_path)
+        }
+        text = ''
+        # Extraer texto con fitz (PyMuPDF)
+        text = self._ensure_str(self._extract_with_fitz(pdf_path))
+        # Si el texto es pobre o se fuerza OCR, usar EasyOCR
+        if use_ocr or self._needs_ocr(text):
+            ocr_text = self._ensure_str(self._extract_with_easyocr(pdf_path))
+            if ocr_text.strip():
+                text += "\n" + ocr_text
+        text = self._process_licitacion_text(text)
+        if extract_tables:
+            tables = self._extract_tables_advanced(pdf_path)
+            result['tables'] = tables
+            table_text = self._ensure_str(self._format_tables_for_text(tables))
+            if table_text.strip():
+                text += "\n" + table_text
+        result['text'] = self._clean_text(self._ensure_str(text))
+        return result
+
+    def _extract_with_easyocr(self, pdf_path: str) -> str:
+        """Extrae texto usando EasyOCR página por página."""
+        ocr_text = ""
+        with fitz.open(pdf_path) as doc:
+            for page_num in range(len(doc)):
+                page = doc.load_page(page_num)
+                pix = page.get_pixmap(dpi=300)
+                img_bytes = pix.tobytes("png")
+                try:
+                    with Image.open(io.BytesIO(img_bytes)) as img:
+                        img = img.convert("RGB")
+                        # EasyOCR espera numpy array
+                        import numpy as np
+                        np_img = np.array(img)
+                        result = self.reader.readtext(np_img, detail=0)
+                        raw = "\n".join(result)
+                        filtered = self._filter_licitacion_content(raw)
+                        filtered = self._ensure_str(filtered)
+                        ocr_text += filtered + "\n"
+                except Exception as e:
+                    print(f"[EasyOCR ERROR] página {page_num+1}: {repr(e)}")
+                    continue
+        return ocr_text
+
+    def _needs_ocr(self, text: str, threshold: int = 100) -> bool:
+        clean_text = re.sub(r'\s+', '', text)
+        return len(clean_text) < threshold
+
+    def _extract_metadata(self, pdf_path: str) -> dict:
+        with fitz.open(pdf_path) as doc:
+            return {
+                'pages': len(doc),
+                'title': doc.metadata.get('title', ''),
+                'author': doc.metadata.get('author', ''),
+                'creation_date': doc.metadata.get('creationDate', '')
+            }
+
+    def _extract_with_fitz(self, pdf_path: str) -> str:
+        text = ""
+        with fitz.open(pdf_path) as doc:
+            for page in doc:
+                text += page.get_text("text") + "\n"
+        return text
+
+    def _filter_licitacion_content(self, text: str) -> str:
+        patterns_to_filter = [
+            r'DIRECCI[OÓ]N:.*PLATAFORMA GUBERNAMENTAL.*QUITO-ECUADOR',
+            r'SERCOP.*SERVICIO NACIONAL DE CONTRATACI[OÓ]N P[UÚ]BLICA',
+            r'GOBIERNO.*ECUADOR',
+            r'C[OÓ]DIGO POSTAL:\s*\d{6}',
+            r'^\s*\d+\s*$',
+            r'^\s*-\s*$',
+            r'^\s*\.+\s*$',
+            r'^\s*[_\-=]+\s*$'
+        ]
+        if not isinstance(text, str):
+            text = " ".join(str(x) for x in text)
+        filtered_lines = []
+        for line in text.splitlines():
+            line = line.strip()
+            if not line:
+                continue
+            should_filter = any(re.search(pattern, line, re.IGNORECASE) for pattern in patterns_to_filter)
+            if not should_filter:
+                filtered_lines.append(line)
+        return "\n".join(filtered_lines)
+
+    def _process_licitacion_text(self, text: str) -> str:
+        corrections = {
+            r'(\w)\s*-\s*(\w)': r'\1-\2',
+            r'ﬁ': 'fi',
+            r'ﬀ': 'ff',
+            r'ﬂ': 'fl',
+            r'(\d)\s+(\d)': r'\1\2',
+            r'\b([A-Z])\s+([A-Z])\b': r'\1\2',
+            r'\b(\d+)\s*\.\s*(\d+)\b': r'\1.\2',
+            r'\b([a-z])\s+([a-z])\b': r'\1\2',
+        }
+        for pattern, replacement in corrections.items():
+            text = re.sub(pattern, replacement, text)
+        lines = text.splitlines()
+        processed_lines = []
+        current_section = ""
+        for line in lines:
+            line = line.strip()
+            if not line:
+                continue
+            section_match = re.match(self.licitacion_patterns['section_header'], line)
+            subsection_match = re.match(self.licitacion_patterns['subsection'], line)
+            item_match = re.match(self.licitacion_patterns['item'], line)
+            if section_match:
+                current_section = f"\nSECCIÓN {section_match.group(1).strip()}: {section_match.group(2).strip()}\n"
+                processed_lines.append(current_section)
+            elif subsection_match:
+                processed_lines.append(f"\nSubsección: {subsection_match.group(1).strip()}\n")
+            elif item_match:
+                processed_lines.append(f"• {item_match.group(1).strip()}")
+            else:
+                processed_lines.append(line)
+        return "\n".join(processed_lines)
+
+    def _extract_tables_advanced(self, pdf_path: str) -> list:
+        tables = []
+        with pdfplumber.open(pdf_path) as pdf:
+            for page_num, page in enumerate(pdf.pages):
+                page_tables = page.extract_tables(self.table_settings)
+                for table_data in page_tables:
+                    cleaned_table = [
+                        [self._clean_table_cell(cell) if cell is not None else "" for cell in row]
+                        for row in table_data
+                    ]
+                    if any(any(cell.strip() for cell in row) for row in cleaned_table):
+                        tables.append({
+                            'page': page_num + 1,
+                            'table': cleaned_table
+                        })
+        return tables
+
+    def _clean_table_cell(self, cell: str) -> str:
+        if not cell:
+            return ""
+        cell = re.sub(r'\s+', ' ', str(cell)).strip()
+        cell = re.sub(r'[^\w\s\-$%.,;:()/\'"&@#]', '', cell)
+        return cell
+
+    def _format_tables_for_text(self, tables: list) -> str:
+        table_text = ""
+        for i, table_data in enumerate(tables, 1):
+            table_text += f"\n\nTABLA {i} (Página {table_data['page']}):\n"
+            import pandas as pd
+            df = pd.DataFrame(table_data['table'])
+            for _, row in df.iterrows():
+                formatted_row = " | ".join(f"{str(cell):<30}" for cell in row)
+                table_text += formatted_row + "\n"
+        return table_text
+
+    def _ensure_str(self, value) -> str:
+        if isinstance(value, str):
+            return value
+        if isinstance(value, (list, tuple)):
+            return "\n".join(self._ensure_str(x) for x in value)
+        try:
+            return str(value)
+        except Exception:
+            return ""
+
+    @staticmethod
+    def _clean_text(text: str) -> str:
+        text = re.sub(r'\s+', ' ', text).strip()
+        text = re.sub(r'(\w)-\s+(\w)', r'\1-\2', text)
+        text = re.sub(r'([a-z])\s+([A-Z])', r'\1 \2', text)
+        text = re.sub(r'[\x00-\x1f\x7f-\x9f]', '', text)
+        replacements = {
+            'Ã¡': 'á', 'Ã©': 'é', 'Ã': 'í', 'Ã³': 'ó', 'Ãº': 'ú',
+            'Ã±': 'ñ', 'Ã': 'Ñ', 'Â°': '°', 'â€“': '-', 'â€œ': '"',
+            'â€': '"', 'â€™': "'", 'â€¢': '-'
+        }
+        for wrong, right in replacements.items():
+            text = text.replace(wrong, right)
+        return text
+
+# Función helper para EasyOCR
+def extract_text_from_pdf_easyocr(pdf_path: str, use_ocr: bool = True, extract_tables: bool = True) -> dict:
+    """
+    Extrae texto de PDF usando EasyOCR y tablas con pdfplumber.
+    Args:
+        pdf_path: Ruta al archivo PDF.
+        use_ocr: Si True, fuerza el uso de OCR.
+        extract_tables: Si True, extrae y procesa tablas por separado.
+    Returns:
+        Diccionario con texto estructurado y tablas.
+    """
+    extractor = PDFTextExtractorEasyOCR()
+    return extractor.extract_text(pdf_path, use_ocr, extract_tables)
 import pandas as pd
 
 class PDFTextExtractor:
